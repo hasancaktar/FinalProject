@@ -3,6 +3,7 @@ using Entites.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,11 +16,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _products = new List<Product>
             {
-                new Product{ProductId=1,CategoryID=1,ProductName="Bilgisayar", UnitPrice=15, UnitsInStock=15},
-                new Product{ProductId=2,CategoryID=2,ProductName="Telefon", UnitPrice=2000, UnitsInStock=3},
-                new Product{ProductId=3,CategoryID=2,ProductName="Fare", UnitPrice=200, UnitsInStock=3},
-                new Product{ProductId=4,CategoryID=2,ProductName="Kablo", UnitPrice=20, UnitsInStock=20},
-                new Product{ProductId=5,CategoryID=2,ProductName="Ekran", UnitPrice=500, UnitsInStock=5},
+                new Product{ProductId=1,CategoryId=1,ProductName="Bilgisayar", UnitPrice=15, UnitsInStock=15},
+                new Product{ProductId=2,CategoryId=22,ProductName="Telefon", UnitPrice=2000, UnitsInStock=3},
+                new Product{ProductId=3,CategoryId=2,ProductName="Fare", UnitPrice=200, UnitsInStock=3},
+                new Product{ProductId=4,CategoryId=2,ProductName="Kablo", UnitPrice=20, UnitsInStock=20},
+                new Product{ProductId=5,CategoryId=2,ProductName="Ekran", UnitPrice=500, UnitsInStock=5},
 
 
             };
@@ -45,15 +46,25 @@ namespace DataAccess.Concrete.InMemory
             
         }
 
+        public Product Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Product> GetAll()
         {
             return _products;
         }
 
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Product> GetAllByCategory(int categoryId)
         {
             //yeni bir liste haline getirip onu döndürür
-          return  _products.Where(p => p.CategoryID==categoryId).ToList();
+          return  _products.Where(p => p.CategoryId==categoryId).ToList();
         }
 
         public void Update(Product product)
@@ -61,7 +72,7 @@ namespace DataAccess.Concrete.InMemory
             //gönderdiğim ürün id sine sahip olan listedeki ürünü bul
             Product productToUpdate = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
             productToUpdate.ProductName = product.ProductName;
-            productToUpdate.CategoryID= product.CategoryID;
+            productToUpdate.CategoryId= product.CategoryId;
             productToUpdate.UnitPrice= product.UnitPrice; 
             productToUpdate.UnitsInStock= product.UnitsInStock;
         }

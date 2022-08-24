@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
-{
-    public interface IProductDal:IEntityRepository<Product>
+{                                   //sen bir customer repositorysisin demek
+    public interface ICustomerDal:IEntityRepository<Customer>
     {
-        
     }
 }
