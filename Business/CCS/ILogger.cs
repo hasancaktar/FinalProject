@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Results
+namespace Business.CCS
 {
-    public interface IDataResult<T>:IResult
+    public interface ILogger
     {
-        T Data { get; }
+        void Log(); 
     }
 }
