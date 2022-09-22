@@ -15,7 +15,7 @@ namespace Core.Utilities.Security.JWT
     public class JwtHelper : ITokenHelper
     {
         public IConfiguration Configuration { get; }//api'deki appsettings'deki değerleri okumaya yarıyor, okunan değerleri TokenOptions'a atıyoruz
-        private TokenOptions _tokenOptions;
+        private TokenOptions _tokenOptions; //appsettings deki tokenoptions'u bu nesneye aktaracam
         private DateTime _accessTokenExpiration;
         public JwtHelper(IConfiguration configuration)
         {
@@ -23,10 +23,11 @@ namespace Core.Utilities.Security.JWT
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); //section appsettings içindeki json modelde bulunan bir model section dur
 
         }
+        //verilen user ve claim bilgilerine göre bir tane token oluşturuyor
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
-            var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+            var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);//tokenı oluşturacak güvenilk anahtari, hangi algoritmayı ve anahtarı kullanacağını da alt satır ayarlıyor
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
@@ -43,11 +44,12 @@ namespace Core.Utilities.Security.JWT
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
             SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {
+            // altta ver,len bilgilere göre token oluşturmaya yarıyor
             var jwt = new JwtSecurityToken(
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
                 expires: _accessTokenExpiration,
-                notBefore: DateTime.Now,
+                notBefore: DateTime.Now,//şuandan önce bir zaman değeri verilemez
                 claims: SetClaims(user, operationClaims),
                 signingCredentials: signingCredentials
             );

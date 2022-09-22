@@ -35,44 +35,37 @@ namespace Business.Concrete
         public IResult Add(Product product)
         {
 
-
-
             IResult result = BusinessRules.Run(
-                CheckProductNameExists(product.ProductName), 
-                            CheckCategoryCount(product.CategoryId), 
+                CheckProductNameExists(product.ProductName),
+                            CheckCategoryCount(product.CategoryId),
                             CheckCategoryLength());
 
             if (result != null)
             {
-
                 return result;
             }
             else
             {
                 _productDal.Add(product);
-
                 return new SuccessResult(Messages.ProductAdded);
             }
-
-
-
         }
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(Product product)
         {
-            var result = _productDal.GetAll(p => p.CategoryId == product.CategoryId).Count;
-            if (result >= 10)
+            var result = _productDal.GetAll(p => p.CategoryId == product.CategoryId).Count();
+            if (result >= 100)
             {
                 return new ErrorResult(Messages.ProdcutCountOfCategoryError);
             }
 
-            throw new NotFiniteNumberException();
+            return new SuccessResult();
         }
 
         private IResult CheckCategoryCount(int categoryId)
         {
             var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
-            if (result >= 10)
+            if (result >= 100)
             {
                 {
                     return new ErrorResult(Messages.ProdcutCountOfCategoryError);

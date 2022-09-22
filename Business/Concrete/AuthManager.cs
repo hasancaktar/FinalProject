@@ -22,6 +22,7 @@ public class AuthManager : IAuthService
     public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
     {
         byte[] passwordHash, passwordSalt;
+        //burada veri tabanına atabilmemiz için password hash ve salt ı oluşturuyoruz
         HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
         var user = new User
         {

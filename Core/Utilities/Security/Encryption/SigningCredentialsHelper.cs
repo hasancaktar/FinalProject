@@ -9,9 +9,12 @@ namespace Core.Utilities.Security.Encryption
 {
     public class SigningCredentialsHelper
     {
+        //webapi'nin kullanabileceği jwt oluşturulması için 
+        //mesela kullanıcı adı parola credentilas'dır
         public static SigningCredentials CreateSigningCredentials(SecurityKey security)
         {
-            return new SigningCredentials(security, SecurityAlgorithms.HmacSha512);
+            //hangi anahtarı ve algoritmayı kullanacaksın demek
+            return new SigningCredentials(security, SecurityAlgorithms.HmacSha512Signature);
         }
     }
 }

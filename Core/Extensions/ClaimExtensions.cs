@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Core.Extensions
 {
     public static class ClaimExtensions
-    {
+    { //bu metod this ICollection<Claim> içine eklenecek demek. yani extend ediyorum demek. ICollection<Claim> bu .net'in içinde olan nesne
         public static void AddEmail(this ICollection<Claim> claims, string email)
         {
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
